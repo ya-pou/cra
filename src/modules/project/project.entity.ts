@@ -17,5 +17,5 @@ export class Project {
   client!: User;
 
   @OneToMany(() => Task, task => task.project)
-  tasks!: Task[];
+  tasks?: Task[];
 }

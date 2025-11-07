@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ProjectService } from "./project.service.js";
+import { CreateProjectDto } from "./dto/createProject.dto.js";
 
 const projectService = new ProjectService();
 
@@ -28,8 +29,7 @@ export class ProjectController {
 
   static async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const {name,description,client,tasks} = req.body
-      const newProject = await projectService.create({name,description,client,tasks})
+      const newProject = await projectService.create(req.body as CreateProjectDto)
       res.status(201).json(newProject);
     } catch (error) {
       next(error);
