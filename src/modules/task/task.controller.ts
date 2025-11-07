@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { TaskService } from "./task.service.js";
+import { CreateTaskDto } from "./dto/createTask.dto.js";
 
 const taskService = new TaskService();
 
@@ -28,8 +29,8 @@ export class TaskController {
 
   static async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const {title,description,hours,project} = req.body
-      const newProject = await taskService.create({title,description,hours,project})
+      const dto: CreateTaskDto = req.body
+      const newProject = await taskService.create(dto)
       res.status(201).json(newProject);
     } catch (error) {
       next(error);
