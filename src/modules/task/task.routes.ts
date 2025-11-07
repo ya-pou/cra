@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { TaskController } from './task.controller.js';
+import { validateDto } from '../../middleware/validate-dto.js';
+import { CreateTaskDto } from './dto/createTask.dto.js';
 
 const router = Router();
 
@@ -84,6 +86,9 @@ router.get('/:id', TaskController.getById);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', TaskController.create);
+router.post('/', 
+  validateDto(CreateTaskDto),
+  TaskController.create
+);
 
 export default router;
