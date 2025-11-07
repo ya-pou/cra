@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserService } from './user.service.js';
+import { CreateUserDto } from './dto/createUserDto.js';
 
 const userService = new UserService();
 
@@ -28,8 +29,8 @@ export class UserController {
 
   static async createUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const {name, email, password} = req.body;
-      const newUser = await userService.createUser({name, email, password});
+      const dto: CreateUserDto = req.body;
+      const newUser = await userService.createUser(dto);
       res.status(201).json(newUser)
     } catch (err) {
       next(err);
