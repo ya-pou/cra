@@ -6,4 +6,6 @@ export class ResponseTaskDto {
   title!: string;
   description!: string;
   project?: ResponseProjectDto[];
+  createdAt!: Date;
+  updatedAt?: Date;
 }

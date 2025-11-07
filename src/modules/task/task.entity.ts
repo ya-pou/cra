@@ -1,11 +1,9 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Project } from "../project/project.entity.js";
+import { BaseEntity } from "../../entities/base.entity.js";
 
 @Entity('tasks')
-export class Task {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class Task extends BaseEntity {
   @Column({ length: 150 })
   title!: string;
 

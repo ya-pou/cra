@@ -6,5 +6,7 @@ export class ResponseProjectDto {
   name!: string; 
   description!: string;
   client!: User;
-  tasks!: Task[]
+  tasks!: Task[];
+  createdAt!: Date;
+  updatedAt?: Date;
 }
