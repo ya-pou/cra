@@ -1,0 +1,35 @@
+{
+  "name": "cra",
+  "version": "1.0.0",
+  "description": "Application de compte rendu d'activité",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "test": "npm run start",
+    "start": "npx tsc && node dist/server.js",
+    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/server.ts\""
+  },
+  "keywords": [
+    "cra"
+  ],
+  "author": "Alexis Haag",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3",
+    "reflect-metadata": "^0.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.27"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
