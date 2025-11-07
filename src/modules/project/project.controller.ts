@@ -19,7 +19,7 @@ export class ProjectController {
     try {
       const id = req.params.id;
       if(!id) return res.status(400).json({message: 'Please enter an id'});
-      const project = await projectService.finOneById(+id);
+      const project = await projectService.findOneById(+id);
       if(!project) return res.status(404).json({message: "Project not found"});
       res.status(200).json(project);
     } catch (error) {

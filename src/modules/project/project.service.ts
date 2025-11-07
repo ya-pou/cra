@@ -14,7 +14,7 @@ export class ProjectService {
     return plainToInstance(ResponseProjectDto, projects)
   }
 
-  async finOneById(id: number): Promise<ResponseProjectDto | null> {
+  async findOneById(id: number): Promise<ResponseProjectDto | null> {
     const project = await this.projectRepo.findOneBy({id});
     return plainToInstance(ResponseProjectDto, project);
   }
