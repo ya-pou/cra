@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { Task } from '../modules/task/task.entity.js';
 import { User } from '../modules/user/user.entity.js';
 import { Project } from '../modules/project/project.entity.js';
+import { BaseEntity } from '../entities/base.entity.js';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
