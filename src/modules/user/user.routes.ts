@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { UserController } from './user.controller.js';
+import { CreateUserDto } from './dto/createUserDto.js';
+import { validateDto } from '../../middleware/validate-dto.js';
 
 const router = Router();
 
@@ -72,7 +74,10 @@ router.get('/', UserController.getAllUsers);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', UserController.createUser);
+router.post('/',
+  validateDto(CreateUserDto),
+  UserController.createUser
+);
 
 /**
  * @swagger
