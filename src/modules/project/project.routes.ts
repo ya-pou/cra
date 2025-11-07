@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { ProjectController } from './project.controller.js';
+import { validateDto } from '../../middleware/validate-dto.js';
+import { CreateProjectDto } from './dto/createProject.dto.js';
 
 const router = Router();
 
@@ -94,6 +96,10 @@ router.get('/:id', ProjectController.getById);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', ProjectController.create);
+router.post(
+  '/', 
+  validateDto(CreateProjectDto),
+  ProjectController.create
+);
 
 export default router;
