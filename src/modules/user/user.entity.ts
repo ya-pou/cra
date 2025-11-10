@@ -10,7 +10,7 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
-  @Column({ select: false })
+  @Column()
   password!: string;
 
   @OneToMany(() => Project, project => project.client)
