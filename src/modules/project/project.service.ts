@@ -3,6 +3,7 @@ import { AppDataSource } from "../../config/data-source.js";
 import { CreateProjectDto } from "./dto/createProject.dto.js";
 import { Project } from "./project.entity.js";
 import { ResponseProjectDto } from "./dto/responseProject.dto.js";
+import { UpdateProjectDto } from "./dto/updateProject.dto.js";
 
 
 export class ProjectService {
@@ -23,6 +24,17 @@ export class ProjectService {
     const newProject = this.projectRepo.create(project);
     const save = await this.projectRepo.save(newProject);
     return plainToInstance(ResponseProjectDto, save);
+  }
+
+  async update(id: number, dto: UpdateProjectDto): Promise<ResponseProjectDto> {
+    const user = await this.projectRepo.findOne({ where: { id } });
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    Object.assign(user, dto);
+    const updated = await this.projectRepo.save(user);
+    const reloaded = await this.projectRepo.findOne({ where: { id } });
+    return plainToInstance(ResponseProjectDto, reloaded, { excludeExtraneousValues: true });  
   }
 
 }

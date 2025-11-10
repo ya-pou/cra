@@ -33,10 +33,7 @@ export class UserService {
     if (!user) {
       throw new Error(`User with id ${id} not found`);
     }
-
-    // Merge les champs modifiables
     Object.assign(user, dto);
-
     const updated = await this.userRepo.save(user);
     const reloaded = await this.userRepo.findOne({ where: { id } });
     return plainToInstance(ResponseUserDto, reloaded, { excludeExtraneousValues: true });  
