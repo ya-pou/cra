@@ -5,6 +5,7 @@ export class CreateTaskDto {
   @Length(1,50)
   title!: string;
 
+  @IsOptional()
   @IsString()
   @Length(0, 500)
   description?: string;

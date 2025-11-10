@@ -27,14 +27,13 @@ export class ProjectService {
   }
 
   async update(id: number, dto: UpdateProjectDto): Promise<ResponseProjectDto> {
-    const user = await this.projectRepo.findOne({ where: { id } });
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
+    const project = await this.projectRepo.findOne({ where: { id } });
+    if (!project) {
+      throw new Error(`Project with id ${id} not found`);
     }
-    Object.assign(user, dto);
-    const updated = await this.projectRepo.save(user);
+    Object.assign(project, dto);
+    const updated = await this.projectRepo.save(project);
     const reloaded = await this.projectRepo.findOne({ where: { id } });
     return plainToInstance(ResponseProjectDto, reloaded, { excludeExtraneousValues: true });  
   }
-
 }
