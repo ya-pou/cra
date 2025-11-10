@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserService } from './user.service.js';
 import { CreateUserDto } from './dto/createUserDto.js';
+import { UpdateUserDto } from './dto/updateUserDto.js';
 
 const userService = new UserService();
 
@@ -34,6 +35,18 @@ export class UserController {
       res.status(201).json(newUser)
     } catch (err) {
       next(err);
+    }
+  }
+
+  static async updateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      if(!req.params.id) throw new Error('id obligatoire');
+      const id = parseInt(req.params.id, 10);
+      const updated = await userService.update(id, req.body as UpdateUserDto);
+      console.log(updated);
+      res.status(200).json(updated);
+    } catch (error) {
+      next(error);
     }
   }
 

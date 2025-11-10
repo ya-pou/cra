@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UserController } from './user.controller.js';
 import { CreateUserDto } from './dto/createUserDto.js';
 import { validateDto } from '../../middleware/validate-dto.js';
+import { UpdateUserDto } from './dto/updateUserDto.js';
 
 const router = Router();
 
@@ -114,5 +115,35 @@ router.post('/',
  *         description: Erreur interne du serveur
  */
 router.get('/:id', UserController.getUserById);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   patch:
+ *     summary: Met à jour un utilisateur
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateUserDto'
+ *     responses:
+ *       200:
+ *         description: Utilisateur mis à jour
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ResponseUserDto'
+ *       404:
+ *         description: Utilisateur non trouvé
+ */
+router.patch('/:id', validateDto(UpdateUserDto), UserController.updateUser);
 
 export default router;
