@@ -14,4 +14,13 @@ export const swaggerSchemas = {
       title: { type: 'string' },
     },
   },
+  Task: {
+    type: 'object',
+    properties: {
+      id: { type: 'integer' },
+      title: { type: 'string' },
+      description: { type: 'string' },
+      hours: {type: 'number'}
+    }
+  }
 };

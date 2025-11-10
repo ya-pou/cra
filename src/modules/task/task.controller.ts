@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { TaskService } from "./task.service.js";
 import { CreateTaskDto } from "./dto/createTask.dto.js";
+import { UpdateTaskDto } from "./dto/updateTask.dto.js";
 
 const taskService = new TaskService();
 
@@ -34,6 +35,17 @@ export class TaskController {
       res.status(201).json(newProject);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      if(!req.params.id) throw new Error('id obligatoire');
+      const id = parseInt(req.params.id, 10);
+      const updated = await taskService.update(id, req.body as UpdateTaskDto);
+      res.status(200).json(updated);
+    } catch (error) {
+      next(error)
     }
   }
 }

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { TaskController } from './task.controller.js';
 import { validateDto } from '../../middleware/validate-dto.js';
 import { CreateTaskDto } from './dto/createTask.dto.js';
+import { UpdateTaskDto } from './dto/updateTask.dto.js';
 
 const router = Router();
 
@@ -90,5 +91,35 @@ router.post('/',
   validateDto(CreateTaskDto),
   TaskController.create
 );
+
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   patch:
+ *     summary: Met à jour une tache
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateTaskDto'
+ *     responses:
+ *       200:
+ *         description: Tache mise à jour
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ResponseTaskDto'
+ *       404:
+ *         description: Tache non trouvé
+ */
+router.patch('/:id', validateDto(UpdateTaskDto), TaskController.update);
 
 export default router;
