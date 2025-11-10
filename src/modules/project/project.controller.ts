@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ProjectService } from "./project.service.js";
 import { CreateProjectDto } from "./dto/createProject.dto.js";
+import { UpdateProjectDto } from "./dto/updateProject.dto.js";
 
 const projectService = new ProjectService();
 
@@ -31,6 +32,17 @@ export class ProjectController {
     try {
       const newProject = await projectService.create(req.body as CreateProjectDto)
       res.status(201).json(newProject);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      if(!req.params.id) throw new Error('id obligatoire');
+      const id = parseInt(req.params.id, 10);
+      const updated = await projectService.update(id, req.body as UpdateProjectDto);
+      res.status(200).json(updated);
     } catch (error) {
       next(error);
     }
