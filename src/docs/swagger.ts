@@ -17,7 +17,22 @@ const options: swaggerJsDoc.Options = {
         description: `${process.env.NODE_ENV || 'development'} environment`,
       },
     ],
-    components: {schemas: swaggerSchemas},
+    components: {
+      schemas: swaggerSchemas,
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'JWT authorization header. Example: "Bearer eyJhbGci..."'
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ]
   },
   apis: ['src/modules/*/*.routes.ts']
 }

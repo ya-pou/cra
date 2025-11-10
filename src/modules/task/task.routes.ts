@@ -3,6 +3,7 @@ import { TaskController } from './task.controller.js';
 import { validateDto } from '../../middleware/validate-dto.js';
 import { CreateTaskDto } from './dto/createTask.dto.js';
 import { UpdateTaskDto } from './dto/updateTask.dto.js';
+import { authMiddleware } from '../../middleware/auth-middleware.js';
 
 const router = Router();
 
@@ -32,7 +33,7 @@ const router = Router();
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get('/', TaskController.getAll);
+router.get('/', authMiddleware, TaskController.getAllForUser);
 
 /**
  * @swagger
@@ -41,6 +42,8 @@ router.get('/', TaskController.getAll);
  *     summary: Récupère une tâche par son identifiant
  *     description: Retourne les informations d’une tâche spécifique à partir de son ID.
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -60,7 +63,7 @@ router.get('/', TaskController.getAll);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get('/:id', TaskController.getById);
+router.get('/:id', authMiddleware, TaskController.getById);
 
 /**
  * @swagger
@@ -69,6 +72,8 @@ router.get('/:id', TaskController.getById);
  *     summary: Crée une nouvelle tâche
  *     description: Ajoute une nouvelle tâche dans la base de données. Une tâche peut être associée à un projet ou être indépendante.
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,7 +92,8 @@ router.get('/:id', TaskController.getById);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', 
+router.post('/',
+  authMiddleware,
   validateDto(CreateTaskDto),
   TaskController.create
 );
@@ -98,6 +104,8 @@ router.post('/',
  *   patch:
  *     summary: Met à jour une tache
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,6 +128,6 @@ router.post('/',
  *       404:
  *         description: Tache non trouvé
  */
-router.patch('/:id', validateDto(UpdateTaskDto), TaskController.update);
+router.patch('/:id', authMiddleware, validateDto(UpdateTaskDto), TaskController.update);
 
 export default router;
